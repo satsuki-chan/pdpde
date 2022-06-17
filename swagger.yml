@@ -1,0 +1,228 @@
+swagger: "2.0"
+info:
+  description: Swagger configuration for REST API
+  version: "1.0.0"
+  title: Swagger API description
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# API paths supported by the backend application
+paths:
+  /metrobuses:
+    get:
+      operationId: metrobus.read_all_metrobuses
+      tags:
+        - Metrobus
+      summary: List of metrobuses, sorted by ID
+      description: Read all registered metrobus units, sorted by ID number
+      responses:
+        200:
+          description: Successfully read all metrobuses in the database
+          schema:
+            type: array
+            items:
+              properties:
+                _id:
+                  type: integer
+                  description: Internal control ID number of the metrobus in the database
+                id:
+                  type: integer
+                  description: ID number of each metrobus unit
+                date_updated:
+                  type: string
+                  description: Date and time of last information update of the metrobus unit
+                vehicle_id:
+                  type: integer
+                  description: ID number of the vehicle
+                vehicle_label:
+                  type: integer
+                  description: Public ID number of the vehicle
+                vehicle_current_status:
+                  type: integer
+                  description: Status of the vehicle during its current trip
+                position_latitude:
+                  type: number
+                  description: Current latitude of the metrobus unit
+                position_longitude:
+                  type: number
+                  description: Current longitude of the metrobus unit
+                geographic_point:
+                  type: string
+                  description: Current geographic point (latitude and longitude) of the metrobus unit
+                position_speed:
+                  type: integer
+                  description: Current metrobus unit speed
+                position_odometer:
+                  type: integer
+                  description: Current metrobus unit speed meassured with an odometer
+                trip_schedule_relationship:
+                  type: integer
+                  description: Metrobus unit's schedule status
+                trip_id:
+                  type: integer
+                  description: ID of the current scheduled trip of the metrobus unit
+                trip_start_date:
+                  type: integer
+                  description: Start date of the current scheduled trip of the metrobus unit
+                trip_route_id:
+                  type: integer
+                  description: ID of the current route of the metrobus unit
+
+  /metrobuses/{metrobus_id}:
+    get:
+      operationId: metrobus.read_metrobus
+      tags:
+        - Metrobus
+      summary: Read a metrobus unit information
+      description: Read one metrobus unit information from the database
+      parameters:
+        - name: metrobus_id
+          in: path
+          description: ID of the metrobus unit to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read a metrobus unit information from the metrobuses database
+          schema:
+            type: object
+            properties:
+              _id:
+                type: integer
+                description: Internal control ID number of the metrobus in the database
+              id:
+                type: integer
+                description: ID number of each metrobus unit
+              date_updated:
+                type: string
+                description: Date and time of last information update of the metrobus unit
+              vehicle_id:
+                type: integer
+                description: ID number of the vehicle
+              vehicle_label:
+                type: integer
+                description: Public ID number of the vehicle
+              vehicle_current_status:
+                type: integer
+                description: Status of the vehicle during its current trip
+              position_latitude:
+                type: number
+                description: Current latitude of the metrobus unit
+              position_longitude:
+                type: number
+                description: Current longitude of the metrobus unit
+              geographic_point:
+                type: string
+                description: Current geographic point (latitude and longitude) of the metrobus unit
+              position_speed:
+                type: integer
+                description: Current metrobus unit speed
+              position_odometer:
+                type: integer
+                description: Current metrobus unit speed meassured with an odometer
+              trip_schedule_relationship:
+                type: integer
+                description: Metrobus unit's schedule status
+              trip_id:
+                type: integer
+                description: ID of the current scheduled trip of the metrobus unit
+              trip_start_date:
+                type: integer
+                description: Start date of the current scheduled trip of the metrobus unit
+              trip_route_id:
+                type: integer
+                description: ID of the current route of the metrobus unit
+
+
+  /alcaldias:
+    get:
+      operationId: metrobus.read_all_alcaldias
+      tags:
+        - Alcaldía
+      summary: List of alcaldías from the CDMX, sorted by name
+      description: Read all registered alcadías (municipalities) from the state of Mexico City (Ciudad de México), sorted by alcaldía's name
+      responses:
+        200:
+          description: Successfully read all alcaldías in the metrobuses database
+          schema:
+            type: array
+            items:
+              properties:
+                _id:
+                  type: integer
+                  description: Internal control ID number of the alcaldía in the database
+                id:
+                  type: integer
+                  description: ID number of each alcaldía
+                nomgeo:
+                  type: string
+                  description: Name of the alcaldía
+                cve_mun:
+                  type: integer
+                  description: Regional ID number of the geograpic entity (alcaldía) inside the state entity (CDMX) where the alcaldía is located
+                cve_ent:
+                  type: integer
+                  description: ID number of the of the geograpic entity (CDMX), to which the alcaldía is located
+                cvegeo:
+                  type: integer
+                  description: National ID number of the geograpic entity (alcaldía)
+                geo_point_2d:
+                  type: string
+                  description: Geographic point (latitude and longitude) of the center of the alcaldía
+                geo_shape:
+                  type: string
+                  description: Poligonal geographic shape of the land area of the alcaldía
+                municipio:
+                  type: integer
+                  description: ID of the alcaldia (municipality) assigned by INEGI
+
+  /alcaldias/{alcaldia_id}:
+    get:
+      operationId: metrobus.read_alcaldia
+      tags:
+        - Alcaldía
+      summary: Read an alcaldía information
+      description: Read one alcaldía (municipality in the CDMX) information from the database
+      parameters:
+        - name: alcaldia_id
+          in: path
+          description: ID of the alcaldía to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read an alcaldía (municipality) information from the metrobuses database
+          schema:
+            type: object
+            properties:
+              _id:
+                type: integer
+                description: Internal control ID number of the alcaldía in the database
+              id:
+                type: integer
+                description: ID number of each alcaldía
+              nomgeo:
+                type: string
+                description: Name of the alcaldía
+              cve_mun:
+                type: integer
+                description: Regional ID number of the geograpic entity (alcaldía) inside the state entity (CDMX) where the alcaldía is located
+              cve_ent:
+                type: integer
+                description: ID number of the of the geograpic entity (CDMX), to which the alcaldía is located
+              cvegeo:
+                type: integer
+                description: National ID number of the geograpic entity (alcaldía)
+              geo_point_2d:
+                type: string
+                description: Geographic point (latitude and longitude) of the center of the alcaldía
+              geo_shape:
+                type: string
+                description: Poligonal geographic shape of the land area of the alcaldía
+              municipio:
+                type: integer
+                description: ID of the alcaldia (municipality) assigned by INEGI
